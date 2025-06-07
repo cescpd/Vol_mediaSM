@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,6 +19,7 @@
       display: inline-block;
       max-width: 400px;
       width: 100%;
+      margin-bottom: 2em;
     }
     input, button {
       width: 100%;
@@ -36,7 +36,7 @@
     button:hover {
       background-color: #218838;
     }
-    #result {
+    #result, #addResult {
       margin-top: 1em;
       font-weight: bold;
     }
@@ -52,21 +52,25 @@
   </div>
 
   <div class="container">
-  <h2>Tambah Volunteer Baru</h2>
-  <input type="text" id="newNama" placeholder="Nama Volunteer Baru" />
-  <input type="password" id="newPassword" placeholder="Password Baru" />
-  <input type="number" id="newSkor" placeholder="Skor" />
-  <button onclick="tambahData()">Tambah Data</button>
-  <p id="addResult"></p>
-</div>
+    <h2>Tambah Volunteer Baru</h2>
+    <input type="text" id="newNama" placeholder="Nama Volunteer Baru" />
+    <input type="password" id="newPassword" placeholder="Password Baru" />
+    <input type="number" id="newSkor" placeholder="Skor" />
+    <button onclick="tambahData()">Tambah Data</button>
+    <p id="addResult"></p>
+  </div>
 
   <script>
-    const volunteerData = [
+    let volunteerData = JSON.parse(localStorage.getItem("volunteerData")) || [
       { nama: "ais", password: "123456", skor: 70 },
       { nama: "gigiz", password: "123456", skor: 70 },
       { nama: "dhea", password: "123456", skor: 70 },
       { nama: "pia", password: "123456", skor: 70 },
     ];
+
+    function saveData() {
+      localStorage.setItem("volunteerData", JSON.stringify(volunteerData));
+    }
 
     function cekSkor() {
       const inputNama = document.getElementById("nama").value.toLowerCase().trim();
@@ -90,6 +94,35 @@
         resultEl.textContent = "Nama atau password salah.";
         resultEl.style.color = "red";
       }
+    }
+
+    function tambahData() {
+      const nama = document.getElementById("newNama").value.toLowerCase().trim();
+      const password = document.getElementById("newPassword").value.trim();
+      const skor = parseInt(document.getElementById("newSkor").value);
+      const addResult = document.getElementById("addResult");
+
+      if (!nama || !password || isNaN(skor)) {
+        addResult.textContent = "Semua field harus diisi.";
+        addResult.style.color = "red";
+        return;
+      }
+
+      if (volunteerData.some(v => v.nama === nama)) {
+        addResult.textContent = "Nama sudah ada.";
+        addResult.style.color = "orange";
+        return;
+      }
+
+      volunteerData.push({ nama, password, skor });
+      saveData();
+
+      addResult.textContent = "Data berhasil ditambahkan.";
+      addResult.style.color = "green";
+
+      document.getElementById("newNama").value = "";
+      document.getElementById("newPassword").value = "";
+      document.getElementById("newSkor").value = "";
     }
   </script>
 </body>
