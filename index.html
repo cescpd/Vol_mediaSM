@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cek Skor Volunteer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 2em;
+      text-align: center;
+    }
+    .container {
+      background: #fff;
+      padding: 2em;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: inline-block;
+      max-width: 400px;
+      width: 100%;
+    }
+    input, button {
+      width: 100%;
+      padding: 0.6em;
+      margin-top: 0.6em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #result {
+      margin-top: 1em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cek Skor Volunteer</h2>
+    <input type="text" id="nama" placeholder="Nama Volunteer" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="cekSkor()">Lihat Skor</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const volunteerData = [
+      { nama: "ais", password: "123456", skor: 70 },
+      { nama: "gigiz", password: "123456", skor: 70 },
+      { nama: "dhea", password: "123456", skor: 70 },
+      { nama: "pia", password: "123456", skor: 70 },
+    ];
+
+    function cekSkor() {
+      const inputNama = document.getElementById("nama").value.toLowerCase().trim();
+      const inputPassword = document.getElementById("password").value.trim();
+      const resultEl = document.getElementById("result");
+
+      if (!inputNama || !inputPassword) {
+        resultEl.textContent = "Nama dan Password wajib diisi.";
+        resultEl.style.color = "red";
+        return;
+      }
+
+      const found = volunteerData.find(
+        (item) => item.nama === inputNama && item.password === inputPassword
+      );
+
+      if (found) {
+        resultEl.textContent = `Skor Anda: ${found.skor}`;
+        resultEl.style.color = "green";
+      } else {
+        resultEl.textContent = "Nama atau password salah.";
+        resultEl.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>
