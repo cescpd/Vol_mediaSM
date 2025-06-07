@@ -51,6 +51,15 @@
     <p id="result"></p>
   </div>
 
+  <div class="container">
+  <h2>Tambah Volunteer Baru</h2>
+  <input type="text" id="newNama" placeholder="Nama Volunteer Baru" />
+  <input type="password" id="newPassword" placeholder="Password Baru" />
+  <input type="number" id="newSkor" placeholder="Skor" />
+  <button onclick="tambahData()">Tambah Data</button>
+  <p id="addResult"></p>
+</div>
+
   <script>
     const volunteerData = [
       { nama: "ais", password: "123456", skor: 70 },
